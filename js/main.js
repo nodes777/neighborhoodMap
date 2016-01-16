@@ -4,38 +4,54 @@ function initMap() {
     center: {lat: -16.4936, lng: 145.4653},
     zoom: 14
   });
+addNewMarkers(model, map);
 }
 
 var model = [
 	{
-		name: "Dougies",
+		title: "Dougies",
 	    position: {lat: -16.495539, lng: 145.462699},
 	    map: map,
-	    title: 'Hello World!'
+	    content: 'Hello World!'
 	},
 	{
-		name: "Iron Bar",
+		title: "Iron Bar",
 	    position: {lat: -16.481341, lng: 145.462643},
 	    map: map,
-	    title: 'Hello World!'
+	    content: 'Hello World!'
 	},
 	{
-		name: "Marina",
+		title: "Marina",
 	    position: {lat: -16.484315, lng: 145.460206},
 	    map: map,
-	    title: 'Hello World!'
+	    content: 'Hello World!'
 	},
 	{
-		name: "The Point",
+		title: "The Point",
 	    position: {lat: -16.482847, lng: 145.467855},
 	    map: map,
-	    title: 'Hello World!'
+	    content: 'Hello World!'
 	},
 	{
-		name: "The Beach",
+		title: "The Beach",
 	    position: {lat: -16.493202, lng: 145.467472},
 	    map: map,
-	    title: 'Hello World!'
+	    content: 'Hello World!'
 	}
 
 ]
+
+function addNewMarkers (markers, map) {
+	var markersAmnt = markers.length;
+	for ( var i = 0; i < markersAmnt; i++ ) {
+		var markerPos = new google.maps.LatLng( markers[i].position.lat, markers[i].position.lng );
+		markers[i].marker = new google.maps.Marker({
+			position: markerPos,
+			map: map,
+			title: markers[i].title,
+		});
+		var infoWindow = new google.maps.InfoWindow({
+			content: markers[i].content
+		});
+	}
+}
