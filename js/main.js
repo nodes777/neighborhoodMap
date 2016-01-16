@@ -4,10 +4,10 @@ function initMap() {
     center: {lat: -16.4936, lng: 145.4653},
     zoom: 14
   });
-addNewMarkers(model, map);
+addNewMarkers(markers, map);
 }
 
-var model = [
+var markers = [
 	{
 		title: "Dougies",
 	    position: {lat: -16.495539, lng: 145.462699},
@@ -41,17 +41,33 @@ var model = [
 
 ]
 
-function addNewMarkers (markers, map) {
-	var markersAmnt = markers.length;
-	for ( var i = 0; i < markersAmnt; i++ ) {
-		var markerPos = new google.maps.LatLng( markers[i].position.lat, markers[i].position.lng );
-		markers[i].marker = new google.maps.Marker({
-			position: markerPos,
-			map: map,
-			title: markers[i].title,
-		});
-		var infoWindow = new google.maps.InfoWindow({
-			content: markers[i].content
-		});
+var Marker = function(data) {
+	this.title = ko.observable(data.title);
+	this.position = ko.observable(data.position);
+	this.map = ko.observable(data.map);
+	this.content = ko.observable(data.content)
 	}
-}
+
+var  ViewModel = function(){
+	var self = this;//self always maps to ViewModel
+	self.markerList = ko.observableArray([]);
+
+	markers.forEach(function(markerItem){
+		self.markerList.push(new Marker(markerItem));
+	});
+
+};
+function addNewMarkers (markers, map) {
+		var markersAmnt = markers.length;
+		for ( var i = 0; i < markersAmnt; i++ ) {
+			var markerPos = new google.maps.LatLng( markers[i].position.lat, markers[i].position.lng );
+			markers[i].marker = new google.maps.Marker({
+				position: markerPos,
+				map: map,
+				title: markers[i].title,
+			});
+			var infoWindow = new google.maps.InfoWindow({
+				content: markers[i].content
+			});
+		}
+	}
