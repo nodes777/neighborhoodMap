@@ -72,3 +72,4 @@ function addNewMarkers (markers, map) {
 			});
 		}
 	}
+
