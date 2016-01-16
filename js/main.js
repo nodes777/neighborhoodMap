@@ -52,7 +52,7 @@ var  ViewModel = function(){
 	var self = this;//self always maps to ViewModel
 	self.markerList = ko.observableArray([]);
 
-	markers.forEach(function(markerItem){
+	markers.forEach(function(markerItem){// pushes items into observableArray
 		self.markerList.push(new Marker(markerItem));
 	});
 
@@ -64,6 +64,7 @@ function addNewMarkers (markers, map) {
 			markers[i].marker = new google.maps.Marker({
 				position: markerPos,
 				map: map,
+				animation: google.maps.Animation.DROP,
 				title: markers[i].title,
 			});
 			var infoWindow = new google.maps.InfoWindow({
