@@ -5,10 +5,8 @@ function initMap() {
     zoom: 14
   });
 addNewMarkers(markers, map);
-	var input = document.getElementById('search');
-  var searchBox = new google.maps.places.SearchBox(input);
-  map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
-
+addSearchBox(map);
+ko.applyBindings(new ViewModel());
 }
 
 var markers = [
@@ -58,7 +56,7 @@ var  ViewModel = function(){
 
 	markers.forEach(function(markerItem){// pushes items into observableArray
 		self.markerList.push(new Marker(markerItem));
-		console.log(markerList);
+		console.log(self.markerList);
 	});
 
 };
@@ -66,15 +64,32 @@ function addNewMarkers (markers, map) {
 		var markersAmnt = markers.length;
 		for ( var i = 0; i < markersAmnt; i++ ) {
 			var markerPos = new google.maps.LatLng( markers[i].position.lat, markers[i].position.lng );
-			markers[i].marker = new google.maps.Marker({
-				position: markerPos,
-				map: map,
-				animation: google.maps.Animation.DROP,
-				title: markers[i].title,
+			var marker = new google.maps.Marker({
+			position: markerPos,
+			map: map,
+			title: markers[i].title,
+			animation: google.maps.Animation.DROP,
 			});
 			var infoWindow = new google.maps.InfoWindow({
 				content: markers[i].content
 			});
+			google.maps.event.addListener(marker, 'click', function(pointer, bubble) {
+			return function() {
+				bubble.open(map, pointer);
+			};
+			}(marker, infoWindow));
 		}
 	}
+function addSearchBox(map){
+	var searchBox = new google.maps.places.SearchBox(document.getElementById('search'));
+	//place change event on search box
+	google.maps.event.addListener(searchBox, 'places_changed', function(){
+		var places = searchBox.getPlaces();
+		var bounds = new google.maps.LatLngBounds();
+		console.log(searchBox.getPlaces());
+		 if (places.length == 0) {
+	      return;
+	    }
 
+	})
+}
