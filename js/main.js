@@ -5,6 +5,10 @@ function initMap() {
     zoom: 14
   });
 addNewMarkers(markers, map);
+	var input = document.getElementById('search');
+  var searchBox = new google.maps.places.SearchBox(input);
+  map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+
 }
 
 var markers = [
@@ -54,6 +58,7 @@ var  ViewModel = function(){
 
 	markers.forEach(function(markerItem){// pushes items into observableArray
 		self.markerList.push(new Marker(markerItem));
+		console.log(markerList);
 	});
 
 };
