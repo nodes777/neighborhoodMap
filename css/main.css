@@ -15,7 +15,11 @@ html, body {
     max-width: 100%;
 }
 .search-list{
-	position: relative;
+	position: absolute;
+	margin-top: 50px;
+	margin-left: 9px;
+	background: black;
+	color: white;
 	float: left;
 	z-index: 1;
 }
