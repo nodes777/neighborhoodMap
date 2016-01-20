@@ -75,7 +75,7 @@ var ViewModel = function() {
     });
     console.log(markerList);
 
-    var query = ko.observable('');
+    self.query = ko.observable(''); // instead of "var query = ko.observable('');"
 
     function addNewMarkers(markers, map) {
         var markersAmnt = markers.length;

@@ -6,20 +6,25 @@
      <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Neighborhood Map</title>
-    <link rel="stylesheet" href="css/main.css">
     <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/main.css">
+
 </head>
 
 <body>
+<div class="container">
 <div class="row">
-    <div class="col-md-2">
+    <div class="search-list">
         <input id="search" data-bind="value: query, valueUpdate: 'keyup'" class="search" type="text" placeholder="Search Box">
         <ul id="markerList" data-bind="foreach: markerList">
             <li data-bind="text: title"></li><!-- need $parent to get out of foreach catList context-->
         </ul>
     </div>
-    <div id="map" class="col-md-10"></div>
+    <div class="" id="map-container">
+        <div id="map" class=""></div>
     </div>
+</div>
+</div>
     <script src="js/knockout-3.4.0.js"></script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC04YbxjHt-t_A0Ce2rOkCwU2uUK4JQ4LM&callback=initMap&libraries=places"></script>
     <script src="js/main.js"></script>
