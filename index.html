@@ -13,17 +13,18 @@
 
 <body>
 <div class="container">
-<div class="row">
-    <div class="search-list">
-        <input id="search" data-bind="value: query, valueUpdate: 'keyup'" class="search" type="text" placeholder="Search Box">
-        <ul id="markerList" data-bind="foreach: markerList">
-            <li data-bind="text: title"></li><!-- need $parent to get out of foreach catList context-->
-        </ul>
+    <div class="row">
+        <div class="search-list">
+        <p>Filter: <input data-bind="value: filter, valueUpdate: 'afterkeydown'" /></p>
+            <input id="search" data-bind="value: query, valueUpdate: 'keyup'" class="search" type="text" placeholder="Search Box">
+            <ul id="markerList" data-bind="foreach: markerList">
+                <li data-bind="text: title"></li><!-- need $parent to get out of foreach catList context-->
+            </ul>
+        </div>
+        <div class="" id="map-container">
+            <div id="map" class=""></div>
+        </div>
     </div>
-    <div class="" id="map-container">
-        <div id="map" class=""></div>
-    </div>
-</div>
 </div>
     <script src="js/knockout-3.4.0.js"></script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC04YbxjHt-t_A0Ce2rOkCwU2uUK4JQ4LM&callback=initMap&libraries=places"></script>
