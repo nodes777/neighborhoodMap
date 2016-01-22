@@ -19,7 +19,7 @@
         <ul id="markerList" data-bind="foreach: markerList">
             <li data-bind="text: title"></li><!-- need $parent to get out of foreach catList context-->
         </ul>
-        <p>Filter: <input data-bind="value: filter, valueUpdate: 'afterkeydown'" /></p>
+        <p>Filter: <input data-bind="textInput: filter, valueUpdate: 'afterkeydown'" /></p>
         <ul id="filteredItems" data-bind="foreach: filteredItems">
             <li data-bind="text: title"></li><!-- need $parent to get out of foreach catList context-->
         </ul>
