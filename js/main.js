@@ -73,27 +73,9 @@ var ViewModel = function() {
     markers.forEach(function(markerItem) { // pushes items into observableArray
         self.markerList.push(new Marker(markerItem));
     });
-    console.log(markerList);// why is this not markerList()?
+    console.log(markerList);
 
     self.query = ko.observable(''); // instead of "var query = ko.observable('');"
-
-self.filteredItems = ko.computed(function() {
-    var filter = self.query().toLowerCase();
-    if (!filter) {
-        return self.query('');
-    } else {
-        return ko.utils.arrayFilter(self.markerList(), function(markerItem) {
-            return stringStartsWith(markerItem.name().toLowerCase(), filter);
-        });
-    }
-}, self);
-
-function stringStartsWith (string, startsWith) {
-    string = string || "";
-    if (startsWith.length > string.length)
-        return false;
-    return string.substring(0, startsWith.length) === startsWith;
-};
 
     function addNewMarkers(markers, map) {
         var markersAmnt = markers.length;
@@ -116,6 +98,26 @@ function stringStartsWith (string, startsWith) {
         }
     }
 
+    function filter() {
+        self.filteredItems = ko.computed(function() {
+            var filter = self.filter().toLowerCase();
+            if (!filter) {
+                return self.markers();
+            } else {
+                return ko.utils.arrayFilter(this.markers(), function(marker) {
+                    return stringStartsWith(marker.title().toLowerCase(), filter);
+                });
+            }
+        }, viewModel);
+    }
+
+    function stringStartsWith(string, startsWith) {
+        string = string || "";
+        if (startsWith.length > string.length)
+            return false;
+        return string.substring(0, startsWith.length) === startsWith;
+    };
+
     function addSearchBox(map) {
         var searchBox = new google.maps.places.SearchBox(document.getElementById('search'));
         //place change event on search box
@@ -131,4 +133,3 @@ function stringStartsWith (string, startsWith) {
     }
 
 };
-
