@@ -80,7 +80,7 @@ var ViewModel = function() {
 self.filteredItems = ko.computed(function() {
     var filter = self.query().toLowerCase();
     if (!filter) {
-        return self.query();
+        return self.query('');
     } else {
         return ko.utils.arrayFilter(self.markerList(), function(markerItem) {
             return stringStartsWith(markerItem.name().toLowerCase(), filter);
