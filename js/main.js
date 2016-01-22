@@ -101,13 +101,9 @@ var ViewModel = function() {
     function filter() {
         self.filteredItems = ko.computed(function() {
             var filter = self.filter().toLowerCase();
-            if (!filter) {
-                return self.markers();
-            } else {
-                return ko.utils.arrayFilter(this.markers(), function(marker) {
+                return ko.utils.arrayFilter(self.markers(), function(marker) {
                     return stringStartsWith(marker.title().toLowerCase(), filter);
                 });
-            }
         }, viewModel);
     }
 
