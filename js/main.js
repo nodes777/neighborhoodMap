@@ -57,7 +57,7 @@ var places = [{
 ]
 
 var Place = function(data) {
-    this.title = ko.observable(data.title);
+    this.title = data.title;
     this.position = ko.observable(data.position);
     this.map = ko.observable(data.map);
     this.content = ko.observable(data.content)
@@ -91,8 +91,8 @@ var ViewModel = function() {
                 title: markers[i].title,
                 animation: google.maps.Animation.DROP,
             });
-            places[i].marker = marker;
-            console.log('places[i]:', places[i]);
+            places[i].marker = marker;// adds marker property to places js array. Very important
+
             var infoWindow = new google.maps.InfoWindow({
                 content: markers[i].content
             });
@@ -110,21 +110,15 @@ var ViewModel = function() {
 console.log(self.visiblePlaces);
 self.userInput = ko.observable('');
 
-  // The filter will look at the names of the places the Markers are standing
-  // for, and look at the user input in the search box. If the user input string
-  // can be found in the place name, then the place is allowed to remain
-  // visible. All other markers are removed.
   self.filterMarkers = function() {
     var searchInput = self.userInput().toLowerCase();
 
     self.visiblePlaces.removeAll();
 
-    // This looks at the name of each places and then determines if the user
-    // input can be found within the place name.
     self.allPlaces.forEach(function(place) {
       place.marker.setVisible(false);
 
-      if (place.title.toLowerCase().indexOf(searchInput) !== -1) {//how does indexOf work?
+      if (place.title.toLowerCase().indexOf(searchInput) !== -1) {
         self.visiblePlaces.push(place);
       }
     });
