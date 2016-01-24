@@ -17,7 +17,7 @@
     <div class="search-list">
         <input type="search" placeholder="keyword search..." data-bind="textInput: userInput, event: {keyup: filterMarkers}">
             <ul id="list-view" data-bind="foreach: visiblePlaces">
-              <li data-bind="text: title"></li>
+              <li><a data-bind="text: title"></a></li>
             </ul>
     </div>
     <div class="" id="map-container">

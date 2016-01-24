@@ -92,6 +92,7 @@ var ViewModel = function() {
                 animation: google.maps.Animation.DROP,
             });
             places[i].marker = marker;
+            console.log('places[i]:', places[i]);
             var infoWindow = new google.maps.InfoWindow({
                 content: markers[i].content
             });
