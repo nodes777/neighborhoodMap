@@ -19,7 +19,7 @@ var places = [{
             lng: 145.462699
         },
         map: map,
-        content: 'Hello World!'
+        content: 'Dougies!'
     }, {
         title: "Iron Bar",
         position: {
@@ -27,7 +27,7 @@ var places = [{
             lng: 145.462643
         },
         map: map,
-        content: 'Hello World!'
+        content: 'Iron Bar'
     }, {
         title: "Marina",
         position: {
@@ -35,7 +35,7 @@ var places = [{
             lng: 145.460206
         },
         map: map,
-        content: 'Hello World!'
+        content: 'Marina'
     }, {
         title: "The Point",
         position: {
@@ -43,7 +43,7 @@ var places = [{
             lng: 145.467855
         },
         map: map,
-        content: 'Hello World!'
+        content: 'The Point'
     }, {
         title: "The Beach",
         position: {
@@ -51,13 +51,13 @@ var places = [{
             lng: 145.467472
         },
         map: map,
-        content: 'Hello World!'
+        content: 'The Beach'
     }
 
 ]
 
 var Place = function(data) {
-    this.title = data.title;
+    this.title = ko.observable(data.title);
     this.position = ko.observable(data.position);
     this.map = ko.observable(data.map);
     this.content = ko.observable(data.content)
@@ -118,7 +118,7 @@ self.userInput = ko.observable('');
     self.allPlaces.forEach(function(place) {
       place.marker.setVisible(false);
 
-      if (place.title.toLowerCase().indexOf(searchInput) !== -1) {
+      if (place.title().toLowerCase().indexOf(searchInput) !== -1) {
         self.visiblePlaces.push(place);
       }
     });
