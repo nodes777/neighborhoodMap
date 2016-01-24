@@ -61,7 +61,7 @@ var Place = function(data) {
     this.position = ko.observable(data.position);
     this.map = ko.observable(data.map);
     this.content = ko.observable(data.content)
-    this.marker = null;
+    this.marker = data.marker;
 }
 
 var ViewModel = function() {

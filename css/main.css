@@ -33,7 +33,7 @@ ul {
 	margin: 10px;
 	list-style-type: none;
 	font: 200 20px/1.5 Helvetica, Verdana, sans-serif;
-  	border-bottom: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
 	text-decoration: none;
  	display: block;
  	color: white;
@@ -48,5 +48,6 @@ li:last-child {
 }
 li a:hover {
   font-size: 30px;
-  background: #f6f6f6;
+  color: white;
+  text-decoration: none
 }
