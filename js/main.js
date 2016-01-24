@@ -65,7 +65,7 @@ var Place = function(data) {
 }
 
 var ViewModel = function() {
-    addNewMarkers(places, map);
+    addNewMarkers(places, map, places);
     var self = this; //self always maps to ViewModel
 
      self.allPlaces = [];
@@ -81,7 +81,7 @@ var ViewModel = function() {
 
     console.log(self.allPlaces);
 
-    function addNewMarkers(markers, map) {
+    function addNewMarkers(markers, map, places) {
         var markersAmnt = markers.length;
         for (var i = 0; i < markersAmnt; i++) {
             var markerPos = new google.maps.LatLng(markers[i].position.lat, markers[i].position.lng);
@@ -90,8 +90,8 @@ var ViewModel = function() {
                 map: map,
                 title: markers[i].title,
                 animation: google.maps.Animation.DROP,
-                marker: marker
             });
+            places[i].marker = marker;
             var infoWindow = new google.maps.InfoWindow({
                 content: markers[i].content
             });
@@ -100,6 +100,7 @@ var ViewModel = function() {
                     bubble.open(map, pointer);
                 };
             }(marker, infoWindow));
+
         }
     }
 
