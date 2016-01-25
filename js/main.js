@@ -112,13 +112,13 @@ var ViewModel = function() {
                         marker.setAnimation(google.maps.Animation.BOUNCE);
                     }
                 }
+
+
             })(marker);
         }
     }
 
 
-
-    console.log(self.visiblePlaces);
     self.userInput = ko.observable('');
 
     self.filterMarkers = function() {
@@ -143,5 +143,25 @@ var ViewModel = function() {
     self.listClick = function() { //links list click to map marker click
         google.maps.event.trigger(this.marker, 'click');
     };
+    var $weatherMain = $('#weatherMain');
+    var $weatherDescription = $('#weatherDescription')
+    var $weatherDiv = $('#weather');
+    var weatherURL = "http://api.openweathermap.org/data/2.5/weather?id=2152681&appid=51bdd38ab0bc0b12282355d5e5f57c74";
+    $.getJSON( weatherURL, function( data )  {
+        console.log(data);
+        var weatherData = data.weather;
+        var conditions = data.weather[0].main;
+        var description = data.weather[0].description;
+        console.log(weatherData);
+        console.log(conditions);
+        console.log(description);
+
+        $weatherMain.text(conditions);
+        $weatherDescription.text(description);
+}).error(function(e){
+    $weatherText.text("Weather Could Not Be Loaded");
+});
 
 };
+//51bdd38ab0bc0b12282355d5e5f57c74 openWeatherMap API key
+//http://api.openweathermap.org/data/2.5/weather?id=2152681&appid=51bdd38ab0bc0b12282355d5e5f57c74 call for Port Douglas

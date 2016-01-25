@@ -50,12 +50,13 @@ li a:hover {
   color: white;
   text-decoration: none
 }
-.pano{
+.weather{
     position:absolute;
      bottom:0;
      right:0;
      width: 400px;
      height: 250px;
-     background-color: black;
+     background-color: blue;
      z-index: 1;
+    color: white;
 }
