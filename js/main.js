@@ -102,7 +102,7 @@ var ViewModel = function() {
                 };
             }(marker, infoWindow));
 
-            (function(marker) {//nice closure
+            (function(marker) { //nice closure
                 marker.addListener('click', toggleBounce);
 
                 function toggleBounce() {
@@ -151,35 +151,33 @@ var ViewModel = function() {
     var $weatherIcon = $('#weatherIcon');
     var weatherURL = "http://api.openweathermap.org/data/2.5/weather?id=2152681&appid=51bdd38ab0bc0b12282355d5e5f57c74";
 
-    $.getJSON( weatherURL, function( data )  {
+    $.getJSON(weatherURL, function(data) {
         console.log(data);
         var weatherData = data.weather;
         var conditions = data.weather[0].main;
-        var description = data.weather[0].description.charAt(0).toUpperCase() + data.weather[0].description.slice(1);//The JSON doesn't capitalize the first letter of the description, doing it here manually
-        var kelvin = data.main.temp;//JSON temp is given in Kelvin
-        var temperature = kelvin * 9/5 - 459.67;
+        var description = data.weather[0].description.charAt(0).toUpperCase() + data.weather[0].description.slice(1); //The JSON doesn't capitalize the first letter of the description, doing it here manually
+        var kelvin = data.main.temp; //JSON temp is given in Kelvin
+        var temperature = kelvin * 9 / 5 - 459.67;
         var icon = data.weather[0].icon;
-        var iconURL = "http://openweathermap.org/img/w/"+ icon +".png";
-        $weatherIcon.append('<img class="weatherIcon" src="' + iconURL +'"">')
+        var iconURL = "http://openweathermap.org/img/w/" + icon + ".png";
+        $weatherIcon.append('<img class="weatherIcon" src="' + iconURL + '"">')
 
         $weatherMain.text(conditions);
         $weatherDescription.text(description);
-        $temp.text(temperature.toFixed(1))//toFixed returns a string to a given decimal place
-}).error(function(e){
-    $weatherMain.text("Weather Could Not Be Loaded, Sorry about that :(");
-});
+        $temp.text(temperature.toFixed(1)) //toFixed returns a string to a given decimal place
+    }).error(function(e) {
+        $weatherMain.text("Weather Could Not Be Loaded, Sorry about that :(");
+    });
 
 };
 
 var reportGoogleMapsIsNotResponding = function() {
-    //var $map = $('#map');
-    //$map.text("Oh No! Google Maps isn't working right now!");
-    var h = document.createElement("H1")                // Create a <h1> element
-    var errorMessage = document.createTextNode("Oh No! Google Maps isn't working right now!");     // Create a text node
-    h.appendChild(errorMessage);
+        //var $map = $('#map');
+        //$map.text("Oh No! Google Maps isn't working right now!");
+        var h = document.createElement("H1") // Create a <h1> element
+        var errorMessage = document.createTextNode("Oh No! Google Maps isn't working right now!"); // Create a text node
+        h.appendChild(errorMessage);
 
-    var search = document.getElementById("search-list");
-    row.insertBefore(h, search);
+        var search = document.getElementById("search-list");
+        row.insertBefore(h, search);
     }
-//51bdd38ab0bc0b12282355d5e5f57c74 openWeatherMap API key
-//http://api.openweathermap.org/data/2.5/weather?id=2152681&appid=51bdd38ab0bc0b12282355d5e5f57c74 call for Port Douglas

@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Neighborhood Map</title>
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -12,27 +12,29 @@
 </head>
 
 <body>
-<div class="container">
-<div class="row" id="row">
-    <div class="search-list" id="search-list">
-        <input type="search" placeholder="Search..." data-bind="textInput: userInput, event: {keyup: filterMarkers}">
-            <ul id="list-view" data-bind="foreach: visiblePlaces">
-              <li><a data-bind="text: title, click : $root.listClick "></a></li>
-            </ul>
-    </div>
-    <div class="weather" id="weather">
-        <h2>Weather in Port Douglas:</h2>
+    <div class="container">
+        <div class="row" id="row">
+            <div class="search-list" id="search-list">
+                <input type="search" placeholder="Search..." data-bind="textInput: userInput, event: {keyup: filterMarkers}">
+                <ul id="list-view" data-bind="foreach: visiblePlaces">
+                    <li>
+                        <a data-bind="text: title, click : $root.listClick "></a>
+                    </li>
+                </ul>
+            </div>
+            <div class="weather" id="weather">
+                <h2>Weather in Port Douglas:</h2>
                 <div id="weatherIcon"></div>
-        <p id="weatherMain"></p>
-        <p id="weatherDescription"></p>
-        <p id="temp"></p>
+                <p id="weatherMain"></p>
+                <p id="weatherDescription"></p>
+                <p id="temp"></p>
 
+            </div>
+            <div class="" id="map-container">
+                <div id="map" class=""></div>
+            </div>
+        </div>
     </div>
-    <div class="" id="map-container">
-        <div id="map" class=""></div>
-    </div>
-</div>
-</div>
     <script src="js/knockout-3.4.0.js"></script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC04YbxjHt-t_A0Ce2rOkCwU2uUK4JQ4LM&callback=initMap&libraries=places" onerror="reportGoogleMapsIsNotResponding()"></script>
     <script src="js/main.js"></script>
