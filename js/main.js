@@ -68,16 +68,16 @@ var ViewModel = function() {
     addNewMarkers(places, map, places);
     var self = this; //self always maps to ViewModel
 
-     self.allPlaces = [];
-      places.forEach(function(place) {
+    self.allPlaces = [];
+    places.forEach(function(place) {
         self.allPlaces.push(new Place(place));
-      });
+    });
 
     self.visiblePlaces = ko.observableArray();
 
- self.allPlaces.forEach(function(place) {//push allPlaces into visible places
-    self.visiblePlaces.push(place);
-  });
+    self.allPlaces.forEach(function(place) { //push allPlaces into visible places
+        self.visiblePlaces.push(place);
+    });
 
     console.log(self.allPlaces);
 
@@ -91,7 +91,7 @@ var ViewModel = function() {
                 title: markers[i].title,
                 animation: google.maps.Animation.DROP,
             });
-            places[i].marker = marker;// adds marker property to places js array. Very important
+            places[i].marker = marker; // adds marker property to places js array. Very important
 
             var infoWindow = new google.maps.InfoWindow({
                 content: markers[i].content
@@ -102,45 +102,46 @@ var ViewModel = function() {
                 };
             }(marker, infoWindow));
 
-            (function (marker) {
-             marker.addListener('click', toggleBounce);
-             function toggleBounce() {
-          if (marker.getAnimation() !== null) {
-            marker.setAnimation(null);
-          } else {
-            marker.setAnimation(google.maps.Animation.BOUNCE);
-          }
+            (function(marker) {
+                marker.addListener('click', toggleBounce);
+
+                function toggleBounce() {
+                    if (marker.getAnimation() !== null) {
+                        marker.setAnimation(null);
+                    } else {
+                        marker.setAnimation(google.maps.Animation.BOUNCE);
+                    }
+                }
+            })(marker);
         }
-        })(marker);
-    }
     }
 
 
 
-console.log(self.visiblePlaces);
-self.userInput = ko.observable('');
+    console.log(self.visiblePlaces);
+    self.userInput = ko.observable('');
 
-  self.filterMarkers = function() {
-    var searchInput = self.userInput().toLowerCase();
+    self.filterMarkers = function() {
+        var searchInput = self.userInput().toLowerCase();
 
-    self.visiblePlaces.removeAll();
+        self.visiblePlaces.removeAll();
 
-    self.allPlaces.forEach(function(place) {
-      place.marker.setVisible(false);
+        self.allPlaces.forEach(function(place) {
+            place.marker.setVisible(false);
 
-      if (place.title().toLowerCase().indexOf(searchInput) !== -1) {
-        self.visiblePlaces.push(place);
-      }
-    });
+            if (place.title().toLowerCase().indexOf(searchInput) !== -1) {
+                self.visiblePlaces.push(place);
+            }
+        });
 
 
-    self.visiblePlaces().forEach(function(place) {
-      place.marker.setVisible(true);
-    });
-  };
+        self.visiblePlaces().forEach(function(place) {
+            place.marker.setVisible(true);
+        });
+    };
 
-self.listClick= function(){//links list click to map marker click
-    google.maps.event.trigger(this.marker, 'click');
-};
+    self.listClick = function() { //links list click to map marker click
+        google.maps.event.trigger(this.marker, 'click');
+    };
 
 };
