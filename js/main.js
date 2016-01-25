@@ -139,5 +139,8 @@ self.userInput = ko.observable('');
     });
   };
 
+self.listClick= function(){//links list click to map marker click
+    google.maps.event.trigger(this.marker, 'click');
+};
 
 };
