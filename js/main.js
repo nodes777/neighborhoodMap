@@ -19,7 +19,7 @@ var places = [{
             lng: 145.462699
         },
         map: map,
-        content: 'Dougies!'
+        content: 'Home base for backpackers. A comfortable friendly place to lay your head.'
     }, {
         title: "Iron Bar",
         position: {
@@ -27,7 +27,7 @@ var places = [{
             lng: 145.462643
         },
         map: map,
-        content: 'Iron Bar'
+        content: "The only bar in town open after midnight. You'll end up here"
     }, {
         title: "Marina",
         position: {
@@ -35,7 +35,7 @@ var places = [{
             lng: 145.460206
         },
         map: map,
-        content: 'Marina'
+        content: 'Rent a boat to go fishing in the Estuaries for $40 an hour. You can hire a grill for the boat too.'
     }, {
         title: "The Point",
         position: {
@@ -43,7 +43,7 @@ var places = [{
             lng: 145.467855
         },
         map: map,
-        content: 'The Point'
+        content: 'The place where all the post card pictures are taken'
     }, {
         title: "The Beach",
         position: {
@@ -51,7 +51,7 @@ var places = [{
             lng: 145.467472
         },
         map: map,
-        content: 'The Beach'
+        content: "Four Mile Beach, go paddle boarding, read a book, I don't know I'm not your mom"
     }
 
 ]
