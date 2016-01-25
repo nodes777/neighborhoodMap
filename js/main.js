@@ -146,18 +146,21 @@ var ViewModel = function() {
     var $weatherMain = $('#weatherMain');
     var $weatherDescription = $('#weatherDescription')
     var $temp = $('#temp')
-    var $weatherDiv = $('#weather');
+    var $weatherIcon = $('#weatherIcon');
     var weatherURL = "http://api.openweathermap.org/data/2.5/weather?id=2152681&appid=51bdd38ab0bc0b12282355d5e5f57c74";
     $.getJSON( weatherURL, function( data )  {
         console.log(data);
         var weatherData = data.weather;
         var conditions = data.weather[0].main;
-        var description = data.weather[0].description.charAt(0).toUpperCase() + data.weather[0].description.slice(1);
+        var description = data.weather[0].description.charAt(0).toUpperCase() + data.weather[0].description.slice(1);//The JSON doesn't capitalize the first letter of the description, doing it here manually
         var kelvin = data.main.temp;//JSON temp is given in Kelvin
         var temperature = kelvin * 9/5 - 459.67;
+        var icon = data.weather[0].icon;
+        var iconURL = "http://openweathermap.org/img/w/"+ icon +".png";
         console.log(weatherData);
         console.log(conditions);
         console.log(description);
+        $weatherIcon.append('<img class="weatherIcon" src="' + iconURL +'"">')
 
         $weatherMain.text(conditions);
         $weatherDescription.text(description);

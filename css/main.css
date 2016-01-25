@@ -23,6 +23,9 @@ html, body {
 	float: left;
 	z-index: 1;
 }
+.search-list input{
+ margin: 5px;
+}
 ul {
   list-style-type: none;
   margin: 0;
@@ -65,5 +68,9 @@ li a:hover {
   text-align: center;
 }
 .weather p{
-  margin: 20px;
+  margin: 30px;
+}
+.weatherIcon{
+  float: right;
+  padding: 30px;
 }
