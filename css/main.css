@@ -56,7 +56,14 @@ li a:hover {
      right:0;
      width: 400px;
      height: 250px;
-     background-color: blue;
+     background-color: black;
+     padding: 2px;
      z-index: 1;
     color: white;
+}
+.weather h2{
+  text-align: center;
+}
+.weather p{
+  margin: 20px;
 }
