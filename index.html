@@ -13,8 +13,8 @@
 
 <body>
 <div class="container">
-<div class="row">
-    <div class="search-list">
+<div class="row" id="row">
+    <div class="search-list" id="search-list">
         <input type="search" placeholder="Search..." data-bind="textInput: userInput, event: {keyup: filterMarkers}">
             <ul id="list-view" data-bind="foreach: visiblePlaces">
               <li><a data-bind="text: title, click : $root.listClick "></a></li>
@@ -34,7 +34,7 @@
 </div>
 </div>
     <script src="js/knockout-3.4.0.js"></script>
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC04YbxjHt-t_A0Ce2rOkCwU2uUK4JQ4LM&callback=initMap&libraries=places"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC04YbxjHt-t_A0Ce2rOkCwU2uUK4JQ4LM&callback=initMap&libraries=places" onerror="reportGoogleMapsIsNotResponding()"></script>
     <script src="js/main.js"></script>
     <script src="js/jquery.min.js"></script>
 

@@ -64,6 +64,7 @@ li a:hover {
      padding: 2px;
      z-index: 1;
     color: white;
+    border-radius: 2px;
 }
 .weather h2{
   text-align: center;

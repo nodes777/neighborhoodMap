@@ -170,5 +170,16 @@ var ViewModel = function() {
 });
 
 };
+
+var reportGoogleMapsIsNotResponding = function() {
+    //var $map = $('#map');
+    //$map.text("Oh No! Google Maps isn't working right now!");
+    var h = document.createElement("H1")                // Create a <h1> element
+    var errorMessage = document.createTextNode("Oh No! Google Maps isn't working right now!");     // Create a text node
+    h.appendChild(errorMessage);
+
+    var search = document.getElementById("search-list");
+    row.insertBefore(h, search);
+    }
 //51bdd38ab0bc0b12282355d5e5f57c74 openWeatherMap API key
 //http://api.openweathermap.org/data/2.5/weather?id=2152681&appid=51bdd38ab0bc0b12282355d5e5f57c74 call for Port Douglas
