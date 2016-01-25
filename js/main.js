@@ -91,7 +91,7 @@ var ViewModel = function() {
                 title: markers[i].title,
                 animation: google.maps.Animation.DROP,
             });
-            places[i].marker = marker; // adds marker property to places js array. Very important
+            places[i].marker = marker; // adds marker property to places js array. Very important for access later
 
             var infoWindow = new google.maps.InfoWindow({
                 content: markers[i].content
@@ -102,7 +102,7 @@ var ViewModel = function() {
                 };
             }(marker, infoWindow));
 
-            (function(marker) {
+            (function(marker) {//nice closure
                 marker.addListener('click', toggleBounce);
 
                 function toggleBounce() {
@@ -143,11 +143,14 @@ var ViewModel = function() {
     self.listClick = function() { //links list click to map marker click
         google.maps.event.trigger(this.marker, 'click');
     };
+
+    //OpenWeatherMap API
     var $weatherMain = $('#weatherMain');
     var $weatherDescription = $('#weatherDescription')
     var $temp = $('#temp')
     var $weatherIcon = $('#weatherIcon');
     var weatherURL = "http://api.openweathermap.org/data/2.5/weather?id=2152681&appid=51bdd38ab0bc0b12282355d5e5f57c74";
+
     $.getJSON( weatherURL, function( data )  {
         console.log(data);
         var weatherData = data.weather;
@@ -157,16 +160,13 @@ var ViewModel = function() {
         var temperature = kelvin * 9/5 - 459.67;
         var icon = data.weather[0].icon;
         var iconURL = "http://openweathermap.org/img/w/"+ icon +".png";
-        console.log(weatherData);
-        console.log(conditions);
-        console.log(description);
         $weatherIcon.append('<img class="weatherIcon" src="' + iconURL +'"">')
 
         $weatherMain.text(conditions);
         $weatherDescription.text(description);
         $temp.text(temperature.toFixed(1))//toFixed returns a string to a given decimal place
 }).error(function(e){
-    $weatherText.text("Weather Could Not Be Loaded");
+    $weatherMain.text("Weather Could Not Be Loaded, Sorry about that :(");
 });
 
 };
