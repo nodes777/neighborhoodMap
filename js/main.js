@@ -22,6 +22,7 @@ var places = [{
             lng: 145.462699
         },
         map: map,
+        placeId: "ChIJhQF9mcSngmkRUy9GSdF0ULA",
         content: 'Home base for backpackers. A comfortable friendly place to lay your head.'
     }, {
         title: "Iron Bar",
@@ -30,6 +31,7 @@ var places = [{
             lng: 145.462643
         },
         map: map,
+        placeId: "ChIJySELinaogmkRMCSNz9OsHfw",
         content: "The only bar in town open after midnight. You'll end up here"
     }, {
         title: "Marina",
@@ -38,6 +40,7 @@ var places = [{
             lng: 145.460206
         },
         map: map,
+        placeId: "ChIJ34AbhNingmkR2A0tV7JObX4",
         content: 'Rent a boat to go fishing in the Estuaries for $40 an hour. You can hire a grill for the boat too.'
     }, {
         title: "The Point",
@@ -46,6 +49,7 @@ var places = [{
             lng: 145.467855
         },
         map: map,
+        placeId: "ChIJKww3InWogmkRKNm0x-qauog",
         content: 'The place where all the post card pictures are taken'
     }, {
         title: "The Beach",
@@ -54,6 +58,7 @@ var places = [{
             lng: 145.467472
         },
         map: map,
+        placeId: "ChIJz3klot2ngmkRwQ8Uv2_xsHQ",
         content: "Four Mile Beach, go paddle boarding, read a book, I don't know I'm not your mom"
     }
 
@@ -99,12 +104,16 @@ var ViewModel = function() {
             var infoWindow = new google.maps.InfoWindow({
                 content: markers[i].content
             });
+            //Opens infoWindow
             google.maps.event.addListener(marker, 'click', function(pointer, bubble) {
                 return function() {
                     bubble.open(map, pointer);
                 };
             }(marker, infoWindow));
 
+
+            //Places API details
+            
             (function(marker) { //nice closure
                 marker.addListener('click', toggleBounce);
 
