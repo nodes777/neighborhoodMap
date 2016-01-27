@@ -145,7 +145,7 @@ var ViewModel = function() {
     };
 
     //OpenWeatherMap API
-    var $weatherMain = $('#weatherMain');
+
     var $weatherDescription = $('#weatherDescription')
     var $temp = $('#temp')
     var $weatherIcon = $('#weatherIcon');
@@ -154,15 +154,16 @@ var ViewModel = function() {
     $.getJSON(weatherURL, function(data) {
         console.log(data);
         var weatherData = data.weather;
-        var conditions = data.weather[0].main;
+        this.weatherMain = ko.observable(data.weather[0].main);
         var description = data.weather[0].description.charAt(0).toUpperCase() + data.weather[0].description.slice(1); //The JSON doesn't capitalize the first letter of the description, doing it here manually
         var kelvin = data.main.temp; //JSON temp is given in Kelvin
         var temperature = kelvin * 9 / 5 - 459.67;
+        this.temp = ko.observable(temperature);
         var icon = data.weather[0].icon;
         var iconURL = "http://openweathermap.org/img/w/" + icon + ".png";
         $weatherIcon.append('<img class="weatherIcon" src="' + iconURL + '"">')
 
-        $weatherMain.text(conditions);
+        //$weatherMain.text(conditions);
         $weatherDescription.text(description);
         $temp.text(temperature.toFixed(1)) //toFixed returns a string to a given decimal place
     }).error(function(e) {
