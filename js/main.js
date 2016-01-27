@@ -1,5 +1,9 @@
 var map;
 var weatherMain = ko.observable();
+var weatherDescription = ko.observable();
+var temp = ko.observable();
+var iconURL = ko.observable();
+
 
 function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
@@ -146,29 +150,23 @@ var ViewModel = function() {
     };
 
     //OpenWeatherMap API
-
-    var $weatherDescription = $('#weatherDescription')
-    var $temp = $('#temp')
-    var $weatherIcon = $('#weatherIcon');
     var weatherURL = "http://api.openweathermap.org/data/2.5/weather?id=2152681&appid=51bdd38ab0bc0b12282355d5e5f57c74";
 
     $.getJSON(weatherURL, function(data) {
         console.log(data);
         var weatherData = data.weather;
-        weatherMain = ko.observable(data.weather[0].main);
+        weatherMain(data.weather[0].main);
         var description = data.weather[0].description.charAt(0).toUpperCase() + data.weather[0].description.slice(1); //The JSON doesn't capitalize the first letter of the description, doing it here manually
+        weatherDescription(description);
         var kelvin = data.main.temp; //JSON temp is given in Kelvin
         var temperature = kelvin * 9 / 5 - 459.67;
-        this.temp = ko.observable(temperature);
+        temp(temperature.toFixed(1));//toFixed returns a string to a given decimal place
         var icon = data.weather[0].icon;
-        var iconURL = "http://openweathermap.org/img/w/" + icon + ".png";
-        $weatherIcon.append('<img class="weatherIcon" src="' + iconURL + '"">')
+        var icoPath = "http://openweathermap.org/img/w/" + icon + ".png";
+        iconURL(icoPath);
 
-        //$weatherMain.text(conditions);
-        $weatherDescription.text(description);
-        $temp.text(temperature.toFixed(1)) //toFixed returns a string to a given decimal place
     }).error(function(e) {
-        $weatherMain.text("Weather Could Not Be Loaded, Sorry about that :(");
+        weatherMain("Weather Could Not Be Loaded, Sorry about that :(");
     });
 
 };
