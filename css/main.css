@@ -58,8 +58,8 @@ li a:hover {
     position: absolute;
     bottom: 0;
     right: 0;
-    width: 400px;
-    height: 250px;
+    width: 30%;
+    height: 30%;
     background-color: black;
     padding: 2px;
     z-index: 1;
@@ -70,9 +70,42 @@ li a:hover {
     text-align: center;
 }
 .weather p {
-    margin: 30px;
+    margin: 20px;
 }
 .weatherIcon {
     float: right;
-    padding: 30px;
+    padding: 20px;
 }
+@media (max-width: 1150px) {
+  #weatherDescription {
+    display: none;
+  }
+}
+@media (max-width: 800px) {
+  #inPD {
+    display: none;
+  }
+}
+@media (max-width: 800px) {
+   .search-list {
+  width: 27%;
+  }
+  .search-list input {
+     width: 90%;
+}
+}
+@media (max-width: 500px) {
+  #temp {
+   display: none;
+  }
+  #weatherMain{
+    display: none;
+  }
+  #weatherIcon{
+    float: center;
+  }
+  .weather {
+  height: 25%;
+  }
+}
+
