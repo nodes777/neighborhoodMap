@@ -1,8 +1,5 @@
 var map;
-var weatherMain = ko.observable();
-var weatherDescription = ko.observable();
-var temp = ko.observable();
-var iconURL = ko.observable();
+
 
 
 function initMap() {
@@ -152,19 +149,24 @@ var ViewModel = function() {
     //OpenWeatherMap API
     var weatherURL = "http://api.openweathermap.org/data/2.5/weather?id=2152681&appid=51bdd38ab0bc0b12282355d5e5f57c74";
 
+self.weatherMain = ko.observable();
+    self.weatherDescription = ko.observable();
+    self.temp = ko.observable();
+    self.iconURL = ko.observable();
+console.log(weatherDescription);
     $.getJSON(weatherURL, function(data) {
         console.log(data);
         var weatherData = data.weather;
-        weatherMain(data.weather[0].main);
+        self.weatherMain(data.weather[0].main);
         var description = data.weather[0].description.charAt(0).toUpperCase() + data.weather[0].description.slice(1); //The JSON doesn't capitalize the first letter of the description, doing it here manually
-        weatherDescription(description);
+       self.weatherDescription(description);
         var kelvin = data.main.temp; //JSON temp is given in Kelvin
         var temperature = kelvin * 9 / 5 - 459.67;
-        temp(temperature.toFixed(1));//toFixed returns a string to a given decimal place
+        self.temp(temperature.toFixed(1));//toFixed returns a string to a given decimal place
         var icon = data.weather[0].icon;
         var icoPath = "http://openweathermap.org/img/w/" + icon + ".png";
-        iconURL(icoPath);
-
+       self.iconURL(icoPath);
+console.log(weatherDescription);
     }).error(function(e) {
         weatherMain("Weather Could Not Be Loaded, Sorry about that :(");
     });
