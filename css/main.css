@@ -109,3 +109,11 @@ li a:hover {
   }
 }
 
+@media (max-width: 400px) {
+ .weather h2 {
+   display: none;
+}
+.weather {
+  height: 17%;
+  }
+}
