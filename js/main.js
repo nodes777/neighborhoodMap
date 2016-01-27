@@ -1,5 +1,6 @@
 var map;
-
+var CLIENT_ID = "M2QLVQ4S0SIBXW3N0TVJZTBAOHXBIO0YZEOQKBPLUWWL3DMV";
+var CLIENT_SECRET = "WVJUWGQ01YKFCJLHEZQLXWOYMYIBUFJVSRXVRBW10EDKPAJK";
 
 
 function initMap() {
@@ -56,15 +57,15 @@ var places = [{
         content: "Four Mile Beach, go paddle boarding, read a book, I don't know I'm not your mom"
     }
 
-]
+];
 
 var Place = function(data) {
     this.title = ko.observable(data.title);
     this.position = ko.observable(data.position);
     this.map = ko.observable(data.map);
-    this.content = ko.observable(data.content)
+    this.content = ko.observable(data.content);
     this.marker = data.marker;
-}
+};
 
 var ViewModel = function() {
     addNewMarkers(places, map, places);
@@ -153,7 +154,7 @@ self.weatherMain = ko.observable();
     self.weatherDescription = ko.observable();
     self.temp = ko.observable();
     self.iconURL = ko.observable();
-console.log(weatherDescription);
+
     $.getJSON(weatherURL, function(data) {
         console.log(data);
         var weatherData = data.weather;
@@ -166,9 +167,9 @@ console.log(weatherDescription);
         var icon = data.weather[0].icon;
         var icoPath = "http://openweathermap.org/img/w/" + icon + ".png";
        self.iconURL(icoPath);
-console.log(weatherDescription);
+
     }).error(function(e) {
-        weatherMain("Weather Could Not Be Loaded, Sorry about that :(");
+        self.weatherMain("Weather Could Not Be Loaded, Sorry about that :(");
     });
 
 };
@@ -176,10 +177,10 @@ console.log(weatherDescription);
 var reportGoogleMapsIsNotResponding = function() {
         //var $map = $('#map');
         //$map.text("Oh No! Google Maps isn't working right now!");
-        var h = document.createElement("H1") // Create a <h1> element
+        var h = document.createElement("H1"); // Create a <h1> element
         var errorMessage = document.createTextNode("Oh No! Google Maps isn't working right now!"); // Create a text node
         h.appendChild(errorMessage);
 
         var search = document.getElementById("search-list");
         row.insertBefore(h, search);
-    }
+    };

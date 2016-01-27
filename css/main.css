@@ -77,43 +77,42 @@ li a:hover {
     padding: 20px;
 }
 @media (max-width: 1150px) {
-  #weatherDescription {
-    display: none;
-  }
+    #weatherDescription {
+        display: none;
+    }
 }
 @media (max-width: 800px) {
-  #inPD {
-    display: none;
-  }
+    #inPD {
+        display: none;
+    }
 }
 @media (max-width: 800px) {
-   .search-list {
-  width: 27%;
-  }
-  .search-list input {
-     width: 90%;
-}
+    .search-list {
+        width: 27%;
+    }
+    .search-list input {
+        width: 90%;
+    }
 }
 @media (max-width: 500px) {
-  #temp {
-   display: none;
-  }
-  #weatherMain{
-    display: none;
-  }
-  #weatherIcon{
-    float: center;
-  }
-  .weather {
-  height: 25%;
-  }
+    #temp {
+        display: none;
+    }
+    #weatherMain {
+        display: none;
+    }
+    #weatherIcon {
+        float: center;
+    }
+    .weather {
+        height: 25%;
+    }
 }
-
 @media (max-width: 400px) {
- .weather h2 {
-   display: none;
-}
-.weather {
-  height: 17%;
-  }
+    .weather h2 {
+        display: none;
+    }
+    .weather {
+        height: 17%;
+    }
 }

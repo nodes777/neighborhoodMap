@@ -22,9 +22,10 @@
                     </li>
                 </ul>
             </div>
-            <div class="weather" id="weather" data-bind="with: $.getJSON">
+            <div class="weather" id="weather">
                 <h2 id="weatherTitle">Weather <span id="inPD">in Port Douglas:</span></h2>
-                <div id="weatherIcon" class="weatherIcon"><img data-bind="attr: { src: iconURL }"></div>
+                <div id="weatherIcon" class="weatherIcon"><img data-bind="attr: { src: iconURL }">
+                </div>
                 <p id="weatherMain" data-bind="text: weatherMain"></p>
                 <p id="weatherDescription" data-bind="text: weatherDescription"></p>
                 <p id="temp" data-bind="text: temp"></p>
