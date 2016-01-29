@@ -92,28 +92,31 @@ var ViewModel = function() {
     function addNewMarkers(markers, map, places) {
         var markersAmnt = markers.length;
         for (var i = 0; i < markersAmnt; i++) {
-            var markerPos = new google.maps.LatLng(markers[i].position.lat, markers[i].position.lng);
-            var marker = new google.maps.Marker({
-                position: markerPos,
-                map: map,
-                title: markers[i].title,
-                animation: google.maps.Animation.DROP,
-            });
-            places[i].marker = marker; // adds marker property to places js array. Very important for access later
-
-            var infoWindow = new google.maps.InfoWindow({
-                content: markers[i].content
-            });
-            //Opens infoWindow
-            google.maps.event.addListener(marker, 'click', function(pointer, bubble) {
-                return function() {
-                    bubble.open(map, pointer);
-                };
-            }(marker, infoWindow));
 
 
             //Places API details
-            
+            var infowindow = new google.maps.InfoWindow();
+            var service = new google.maps.places.PlacesService(map);
+
+            service.getDetails({
+                placeId: markers[i].placeId
+               }, function(place, status) {
+                    if (status === google.maps.places.PlacesServiceStatus.OK) {
+                      var marker = new google.maps.Marker({
+                        map: map,
+                        position: place.geometry.location,
+                        animation: google.maps.Animation.DROP,
+                      });
+                    markers[i].marker = marker; // adds marker property to places js array. Very important for access later
+                      google.maps.event.addListener(marker, 'click', function() {
+                        infowindow.setContent('<div><strong>' + place.name + '</strong><br>' +
+                          'Place ID: ' + place.place_id + '<br>' +
+                          place.formatted_address + '</div>');
+                        infowindow.open(map, this);
+                      });
+                    }
+                  });
+
             (function(marker) { //nice closure
                 marker.addListener('click', toggleBounce);
 
@@ -126,7 +129,7 @@ var ViewModel = function() {
                 }
 
 
-            })(marker);
+            });
         }
     }
 
