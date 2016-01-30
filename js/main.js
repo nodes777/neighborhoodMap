@@ -22,7 +22,7 @@ var places = [{
             lng: 145.462699
         },
         map: map,
-        placeId: "ChIJhQF9mcSngmkRUy9GSdF0ULA",
+        placeId: "4e0b34d6aeb7a4da430a2606",
         content: 'Home base for backpackers. A comfortable friendly place to lay your head.'
     }, {
         title: "Iron Bar",
@@ -31,7 +31,7 @@ var places = [{
             lng: 145.462643
         },
         map: map,
-        placeId: "ChIJySELinaogmkRMCSNz9OsHfw",
+        placeId: "4b5d4c14f964a520215929e3",
         content: "The only bar in town open after midnight. You'll end up here"
     }, {
         title: "Marina",
@@ -40,7 +40,7 @@ var places = [{
             lng: 145.460206
         },
         map: map,
-        placeId: "ChIJ34AbhNingmkR2A0tV7JObX4",
+        placeId: "4bb687672ea195217cd8ab2f",
         content: 'Rent a boat to go fishing in the Estuaries for $40 an hour. You can hire a grill for the boat too.'
     }, {
         title: "The Point",
@@ -49,7 +49,7 @@ var places = [{
             lng: 145.467855
         },
         map: map,
-        placeId: "ChIJKww3InWogmkRKNm0x-qauog",
+        placeId: "4dc72cab7d8b14fb4655abc9",
         content: 'The place where all the post card pictures are taken'
     }, {
         title: "The Beach",
@@ -58,7 +58,7 @@ var places = [{
             lng: 145.467472
         },
         map: map,
-        placeId: "ChIJz3klot2ngmkRwQ8Uv2_xsHQ",
+        placeId: "4b847c85f964a520493831e3",
         content: "Four Mile Beach, go paddle boarding, read a book, I don't know I'm not your mom"
     }
 
@@ -87,18 +87,18 @@ var ViewModel = function() {
         self.visiblePlaces.push(place);
     });
 
-
+//var foursquareURL ='https://api.foursquare.com/v2/venues/'+ markers[i].placeId + '?client_id=M2QLVQ4S0SIBXW3N0TVJZTBAOHXBIO0YZEOQKBPLUWWL3DMV&client_secret=WVJUWGQ01YKFCJLHEZQLXWOYMYIBUFJVSRXVRBW10EDKPAJK&v=20140806';
     function addNewMarkers(markers, map, places) {
         var markersAmnt = markers.length;
         for (var i = 0; i < markersAmnt; i++) {
-        var placesURL = "https://maps.googleapis.com/maps/api/place/details/json?placeid="+ places[i].placeId +"&key=AIzaSyB5m4FwYzZ7tHxkhWW8-DdRIw3Gi0tfweM";
+        var foursquareURL ='https://api.foursquare.com/v2/venues/'+ markers[i].placeId + '?client_id=M2QLVQ4S0SIBXW3N0TVJZTBAOHXBIO0YZEOQKBPLUWWL3DMV&client_secret=WVJUWGQ01YKFCJLHEZQLXWOYMYIBUFJVSRXVRBW10EDKPAJK&v=20140806';
         $.ajax({
-            url: placesURL,
+            url: foursquareURL,
             dataType: "jsonp",
+            jsonp: "callback",
             success: function(data){
-            var result = data.result;
-            var address = formatted_address;
-            console.log(address);
+                console.log( data );
+
     }
 })
 
