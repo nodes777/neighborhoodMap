@@ -87,7 +87,7 @@ var ViewModel = function() {
         self.visiblePlaces.push(place);
     });
 
-//var foursquareURL ='https://api.foursquare.com/v2/venues/'+ markers[i].placeId + '?client_id=M2QLVQ4S0SIBXW3N0TVJZTBAOHXBIO0YZEOQKBPLUWWL3DMV&client_secret=WVJUWGQ01YKFCJLHEZQLXWOYMYIBUFJVSRXVRBW10EDKPAJK&v=20140806';
+
     function addNewMarkers(markers, map, places) {
         var markersAmnt = markers.length;
         for (var i = 0; i < markersAmnt; i++) {
@@ -97,25 +97,24 @@ var ViewModel = function() {
             dataType: "jsonp",
             jsonp: "callback",
             success: function(data){
-                console.log( data );
+                var name = data.response.venue.name;
+                console.log(name);
+                var lat = data.response.venue.location.lat;
+                var lng = data.response.venue.location.lng;
+                var address = data.response.venue.location.formattedAddress[0];
+                console.log (address);
 
-    }
-})
-
-
-
-
-            var markerPos = new google.maps.LatLng(markers[i].position.lat, markers[i].position.lng);
-            var marker = new google.maps.Marker({
+                var markerPos = new google.maps.LatLng(lat, lng);
+                var marker = new google.maps.Marker({
                 position: markerPos,
                 map: map,
-                title: markers[i].title,
+                title: name,
                 animation: google.maps.Animation.DROP,
             });
-            places[i].marker = marker; // adds marker property to places js array. Very important for access later
+           places[i].marker = marker; // adds marker property to places js array. Needed for ko access later
 
             var infoWindow = new google.maps.InfoWindow({
-                content: markers[i].content
+                content: address
             });
             //Opens infoWindow
             google.maps.event.addListener(marker, 'click', function(pointer, bubble) {
@@ -124,9 +123,6 @@ var ViewModel = function() {
                 };
             }(marker, infoWindow));
 
-
-            //Places API details
-            
             (function(marker) { //nice closure
                 marker.addListener('click', toggleBounce);
 
@@ -141,7 +137,12 @@ var ViewModel = function() {
 
             })(marker);
         }
+
+    })
+
     }
+}
+
 
 
     self.userInput = ko.observable('');
