@@ -91,6 +91,7 @@ var ViewModel = function() {
     function addNewMarkers(markers, map, places) {
         var markersAmnt = markers.length;
         for (var i = 0; i < markersAmnt; i++) {
+            console.log(markers[i]);
         var foursquareURL ='https://api.foursquare.com/v2/venues/'+ markers[i].placeId + '?client_id=M2QLVQ4S0SIBXW3N0TVJZTBAOHXBIO0YZEOQKBPLUWWL3DMV&client_secret=WVJUWGQ01YKFCJLHEZQLXWOYMYIBUFJVSRXVRBW10EDKPAJK&v=20140806';
         $.ajax({
             url: foursquareURL,
@@ -106,12 +107,13 @@ var ViewModel = function() {
 
                 var markerPos = new google.maps.LatLng(lat, lng);
                 var marker = new google.maps.Marker({
-                position: markerPos,
-                map: map,
-                title: name,
-                animation: google.maps.Animation.DROP,
-            });
-           places[i].marker = marker; // adds marker property to places js array. Needed for ko access later
+                    position: markerPos,
+                    map: map,
+                    title: name,
+                    animation: google.maps.Animation.DROP,
+                });
+                console.log(markers[i]);
+          //places[i].marker = marker; // adds marker property to places js array. Needed for ko access later
 
             var infoWindow = new google.maps.InfoWindow({
                 content: address
@@ -139,6 +141,8 @@ var ViewModel = function() {
         }
 
     })
+console.log(markers[i]);
+
 
     }
 }
