@@ -73,7 +73,7 @@ var Place = function(data) {
 };
 
 var ViewModel = function() {
-    addNewMarkers(places, map, places);
+    addNewMarkers(places, map);
     var self = this; //self always maps to ViewModel
 
     self.allPlaces = [];
@@ -88,59 +88,52 @@ var ViewModel = function() {
     });
 
 
-    function addNewMarkers(markers, map, places) {
-     var markersAmnt = markers.length;
-     for (var i = 0; i < markersAmnt; i++) {
-         var foursquareURL = 'https://api.foursquare.com/v2/venues/' + markers[i].placeId + '?client_id=M2QLVQ4S0SIBXW3N0TVJZTBAOHXBIO0YZEOQKBPLUWWL3DMV&client_secret=WVJUWGQ01YKFCJLHEZQLXWOYMYIBUFJVSRXVRBW10EDKPAJK&v=20140806';
+    function addNewMarkers(markers, map) {
+     markers.forEach(function(place) {
+         var foursquareURL = 'https://api.foursquare.com/v2/venues/' + place.placeId + '?client_id=M2QLVQ4S0SIBXW3N0TVJZTBAOHXBIO0YZEOQKBPLUWWL3DMV&client_secret=WVJUWGQ01YKFCJLHEZQLXWOYMYIBUFJVSRXVRBW10EDKPAJK&v=20140806';
          $.ajax({
              url: foursquareURL,
              dataType: "jsonp",
              jsonp: "callback",
-             success: function(data, i) {
-                return function (data, i){
-                 var name = data.response.venue.name;
-                 console.log(i);
-                 var lat = data.response.venue.location.lat;
-                 var lng = data.response.venue.location.lng;
-                 var address = data.response.venue.location.formattedAddress[0];
+             success: function(data) {
+                     var name = data.response.venue.name;
+                     var lat = data.response.venue.location.lat;
+                     var lng = data.response.venue.location.lng;
+                     var address = data.response.venue.location.formattedAddress[0];
 
-                 var markerPos = new google.maps.LatLng(lat, lng);
-                 var marker = new google.maps.Marker({
-                     position: markerPos,
-                     map: map,
-                     title: name,
-                     animation: google.maps.Animation.DROP,
-                 });
-                 console.log(markers[i]);
-                 //places[i].marker = marker; // adds marker property to places js array. Needed for ko access later
+                     var markerPos = new google.maps.LatLng(lat, lng);
+                     var marker = new google.maps.Marker({
+                         position: markerPos,
+                         map: map,
+                         title: name,
+                         animation: google.maps.Animation.DROP,
+                     });
+                     place.marker = marker; // adds marker property to places js array. Needed for ko access later
+                     var infoWindow = new google.maps.InfoWindow({
+                         content: name+ "<br>" + address
+                     });
+                     //Opens infoWindow
+                     google.maps.event.addListener(marker, 'click', function(pointer, bubble) {
+                         return function() {
+                             bubble.open(map, pointer);
+                         };
+                     }(marker, infoWindow));
 
-                 var infoWindow = new google.maps.InfoWindow({
-                     content: name+ "<br>" + address
-                 });
-                 //Opens infoWindow
-                 google.maps.event.addListener(marker, 'click', function(pointer, bubble) {
-                     return function() {
-                         bubble.open(map, pointer);
-                     };
-                 }(marker, infoWindow));
+                     (function(marker) { //nice closure
+                         marker.addListener('click', toggleBounce);
 
-                 (function(marker) { //nice closure
-                     marker.addListener('click', toggleBounce);
-
-                     function toggleBounce() {
-                         if (marker.getAnimation() !== null) {
-                             marker.setAnimation(null);
-                         } else {
-                             marker.setAnimation(google.maps.Animation.BOUNCE);
+                         function toggleBounce() {
+                             if (marker.getAnimation() !== null) {
+                                 marker.setAnimation(null);
+                             } else {
+                                 marker.setAnimation(google.maps.Animation.BOUNCE);
+                             }
                          }
-                     }
-                 })(marker);
-             };//end of return
-             }(i)//end of success func
+                     })(marker);
+             }//end of success func
          })//end of ajax
-     }//end of for loop
+     })//end of forEach loop
  }//end of addNewMarkers
-
 
 
     self.userInput = ko.observable('');
@@ -150,6 +143,7 @@ var ViewModel = function() {
 
         self.visiblePlaces.removeAll();
 
+console.log(places);
         self.allPlaces.forEach(function(place) {
             place.marker.setVisible(false);
 
