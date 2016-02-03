@@ -78,14 +78,13 @@ var Place = function(data) {
 };
 
 var ViewModel = function() {
-    var self = this; //self always maps to ViewModel
     addNewMarkers(places, map);
+    var self = this; //self always maps to ViewModel
 
-    self.markerArray = [];
     self.allPlaces = [];
-    /*places.forEach(function(placeData) {
+    places.forEach(function(placeData) {
         self.allPlaces.push(new Place(placeData));
-    });*/
+    });
 console.log(self.markerArray);
 
 
@@ -117,8 +116,7 @@ console.log(self.visiblePlaces());
                          animation: google.maps.Animation.DROP,
                      });
                      places.marker = marker;
-                     self.markerArray.push(marker);
-                     console.log(self.markerArray); // adds marker property to places js array. Needed for ko access later
+
                      var infoWindow = new google.maps.InfoWindow({
                          content: name+ "<br>" + address
                      });
@@ -145,18 +143,6 @@ console.log(self.visiblePlaces());
      })//end of forEach loop
  }//end of addNewMarkers
 
-console.log(self.markerArray);
-function addMarkerArray(places, markerArray){
-    for (var i = 0; i<places.length; i++){
-        places[i].marker = markerArray[i];
-        console.log(places[i]);
-
-    }
-    console.log(markerArray);
-}
-addMarkerArray(places);
-
-console.log(self.markerArray);
     self.userInput = ko.observable('');
 
     self.filterMarkers = function() {
