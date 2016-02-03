@@ -17,29 +17,54 @@ function initMap() {
 
 var places = [{
         title: "Dougies",
+        position: {
+            lat: -16.495539,
+            lng: 145.462699
+        },
         map: map,
+        marker: null,
         placeId: "4e0b34d6aeb7a4da430a2606",
-        //content: 'Home base for backpackers. A comfortable friendly place to lay your head.'
+        content: 'Home base for backpackers. A comfortable friendly place to lay your head.'
     }, {
         title: "Iron Bar",
+        position: {
+            lat: -16.481341,
+            lng: 145.462643
+        },
+        marker: null,
         map: map,
         placeId: "4b5d4c14f964a520215929e3",
-        //content: "The only bar in town open after midnight. You'll end up here"
+        content: "The only bar in town open after midnight. You'll end up here"
     }, {
         title: "Marina",
+        position: {
+            lat: -16.484315,
+            lng: 145.460206
+        },
+        marker: null,
         map: map,
         placeId: "4bb687672ea195217cd8ab2f",
-        //content: 'Rent a boat to go fishing in the Estuaries for $40 an hour. You can hire a grill for the boat too.'
+        content: 'Rent a boat to go fishing in the Estuaries for $40 an hour. You can hire a grill for the boat too.'
     }, {
         title: "The Point",
+        position: {
+            lat: -16.482847,
+            lng: 145.467855
+        },
+        marker: null,
         map: map,
         placeId: "4dc72cab7d8b14fb4655abc9",
-        //content: 'The place where all the post card pictures are taken'
+        content: 'The place where all the post card pictures are taken'
     }, {
         title: "The Beach",
+        position: {
+            lat: -16.493202,
+            lng: 145.467472
+        },
+        marker: null,
         map: map,
         placeId: "4b847c85f964a520493831e3",
-        //content: "Four Mile Beach, go paddle boarding, read a book, I don't know I'm not your mom"
+        content: "Four Mile Beach, go paddle boarding, read a book, I don't know I'm not your mom"
     }
 
 ];
@@ -53,19 +78,23 @@ var Place = function(data) {
 };
 
 var ViewModel = function() {
-
     var self = this; //self always maps to ViewModel
-    self.allPlaces = [];
-    places.forEach(function(place) {
-        self.allPlaces.push(new Place(place));
-    });
     addNewMarkers(places, map);
-    self.visiblePlaces = ko.observableArray();
 
-    self.allPlaces.forEach(function(place) { //push allPlaces into visible places
-        self.visiblePlaces.push(place);
+    self.markerArray = [];
+    self.allPlaces = [];
+    /*places.forEach(function(placeData) {
+        self.allPlaces.push(new Place(placeData));
+    });*/
+console.log(self.markerArray);
+
+
+    self.visiblePlaces = ko.observableArray([]);
+
+    places.forEach(function(placeData) { //push allPlaces into visible places
+        self.visiblePlaces.push(placeData);
     });
-
+console.log(self.visiblePlaces());
 
     function addNewMarkers(markers, map) {
      markers.forEach(function(place) {
@@ -87,9 +116,9 @@ var ViewModel = function() {
                          title: name,
                          animation: google.maps.Animation.DROP,
                      });
-                     console.log(self.allPlaces);
-                     self.allPlaces.marker = marker;// adds marker property to places js array. Needed for ko access later
-                     console.log(self.allPlaces.Place);
+                     places.marker = marker;
+                     self.markerArray.push(marker);
+                     console.log(self.markerArray); // adds marker property to places js array. Needed for ko access later
                      var infoWindow = new google.maps.InfoWindow({
                          content: name+ "<br>" + address
                      });
@@ -116,15 +145,25 @@ var ViewModel = function() {
      })//end of forEach loop
  }//end of addNewMarkers
 
+console.log(self.markerArray);
+function addMarkerArray(places, markerArray){
+    for (var i = 0; i<places.length; i++){
+        places[i].marker = markerArray[i];
+        console.log(places[i]);
 
+    }
+    console.log(markerArray);
+}
+addMarkerArray(places);
+
+console.log(self.markerArray);
     self.userInput = ko.observable('');
 
     self.filterMarkers = function() {
         var searchInput = self.userInput().toLowerCase();
 
         self.visiblePlaces.removeAll();
-        console.log(self.allPlaces);
-        console.log(places);
+
         self.allPlaces.forEach(function(place) {
             place.marker.setVisible(false);
 
@@ -152,7 +191,6 @@ self.weatherMain = ko.observable();
     self.iconURL = ko.observable();
 
     $.getJSON(weatherURL, function(data) {
-        console.log(data);
         var weatherData = data.weather;
         self.weatherMain(data.weather[0].main);
         var description = data.weather[0].description.charAt(0).toUpperCase() + data.weather[0].description.slice(1); //The JSON doesn't capitalize the first letter of the description, doing it here manually
