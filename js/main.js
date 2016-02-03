@@ -17,49 +17,29 @@ function initMap() {
 
 var places = [{
         title: "Dougies",
-        position: {
-            lat: -16.495539,
-            lng: 145.462699
-        },
         map: map,
         placeId: "4e0b34d6aeb7a4da430a2606",
-        content: 'Home base for backpackers. A comfortable friendly place to lay your head.'
+        //content: 'Home base for backpackers. A comfortable friendly place to lay your head.'
     }, {
         title: "Iron Bar",
-        position: {
-            lat: -16.481341,
-            lng: 145.462643
-        },
         map: map,
         placeId: "4b5d4c14f964a520215929e3",
-        content: "The only bar in town open after midnight. You'll end up here"
+        //content: "The only bar in town open after midnight. You'll end up here"
     }, {
         title: "Marina",
-        position: {
-            lat: -16.484315,
-            lng: 145.460206
-        },
         map: map,
         placeId: "4bb687672ea195217cd8ab2f",
-        content: 'Rent a boat to go fishing in the Estuaries for $40 an hour. You can hire a grill for the boat too.'
+        //content: 'Rent a boat to go fishing in the Estuaries for $40 an hour. You can hire a grill for the boat too.'
     }, {
         title: "The Point",
-        position: {
-            lat: -16.482847,
-            lng: 145.467855
-        },
         map: map,
         placeId: "4dc72cab7d8b14fb4655abc9",
-        content: 'The place where all the post card pictures are taken'
+        //content: 'The place where all the post card pictures are taken'
     }, {
         title: "The Beach",
-        position: {
-            lat: -16.493202,
-            lng: 145.467472
-        },
         map: map,
         placeId: "4b847c85f964a520493831e3",
-        content: "Four Mile Beach, go paddle boarding, read a book, I don't know I'm not your mom"
+        //content: "Four Mile Beach, go paddle boarding, read a book, I don't know I'm not your mom"
     }
 
 ];
@@ -73,14 +53,13 @@ var Place = function(data) {
 };
 
 var ViewModel = function() {
-    addNewMarkers(places, map);
-    var self = this; //self always maps to ViewModel
 
+    var self = this; //self always maps to ViewModel
     self.allPlaces = [];
     places.forEach(function(place) {
         self.allPlaces.push(new Place(place));
     });
-
+    addNewMarkers(places, map);
     self.visiblePlaces = ko.observableArray();
 
     self.allPlaces.forEach(function(place) { //push allPlaces into visible places
@@ -108,7 +87,9 @@ var ViewModel = function() {
                          title: name,
                          animation: google.maps.Animation.DROP,
                      });
-                     place.marker = marker; // adds marker property to places js array. Needed for ko access later
+                     console.log(self.allPlaces);
+                     self.allPlaces.marker = marker;// adds marker property to places js array. Needed for ko access later
+                     console.log(self.allPlaces.Place);
                      var infoWindow = new google.maps.InfoWindow({
                          content: name+ "<br>" + address
                      });
@@ -142,8 +123,8 @@ var ViewModel = function() {
         var searchInput = self.userInput().toLowerCase();
 
         self.visiblePlaces.removeAll();
-
-console.log(places);
+        console.log(self.allPlaces);
+        console.log(places);
         self.allPlaces.forEach(function(place) {
             place.marker.setVisible(false);
 
