@@ -84,8 +84,29 @@ var ViewModel = function() {
 
     self.allPlaces = [];
 
-function myCallback(data) {
-    var name = data.response.venue.name;
+function myCallback(result) {
+    alert("help")
+        places.forEach(function(placeData) {
+        self.allPlaces.push(new Place(placeData));
+        });
+        places.forEach(function(placeData) { //push allPlaces into visible places
+        self.visiblePlaces.push(placeData);
+        });
+}
+
+    addNewMarkers(places, map, myCallback);
+    self.visiblePlaces = ko.observableArray([]);
+                     console.log(self.allPlaces);
+
+    function addNewMarkers(markers, map, callback) {
+     markers.forEach(function(place) {
+         var foursquareURL = 'https://api.foursquare.com/v2/venues/' + place.placeId + '?client_id=M2QLVQ4S0SIBXW3N0TVJZTBAOHXBIO0YZEOQKBPLUWWL3DMV&client_secret=WVJUWGQ01YKFCJLHEZQLXWOYMYIBUFJVSRXVRBW10EDKPAJK&v=20140806';
+         $.ajax({
+             url: foursquareURL,
+             dataType: "jsonp",
+             jsonp: "callback",
+             success: function(data) {
+                     var name = data.response.venue.name;
                      var lat = data.response.venue.location.lat;
                      var lng = data.response.venue.location.lng;
                      var address = data.response.venue.location.formattedAddress[0];
@@ -118,30 +139,10 @@ function myCallback(data) {
                                  marker.setAnimation(google.maps.Animation.BOUNCE);
                              }
                          }
-                 })(marker);
-    alert("help")
-        places.forEach(function(placeData) {
-        self.allPlaces.push(new Place(placeData));
-        });
-        places.forEach(function(placeData) { //push allPlaces into visible places
-        self.visiblePlaces.push(placeData);
-        });
-}
-
-    addNewMarkers(places, map, myCallback);
-    self.visiblePlaces = ko.observableArray([]);
-                     console.log(self.allPlaces);
-
-    function addNewMarkers(markers, map, callback) {
-     markers.forEach(function(place) {
-         var foursquareURL = 'https://api.foursquare.com/v2/venues/' + place.placeId + '?client_id=M2QLVQ4S0SIBXW3N0TVJZTBAOHXBIO0YZEOQKBPLUWWL3DMV&client_secret=WVJUWGQ01YKFCJLHEZQLXWOYMYIBUFJVSRXVRBW10EDKPAJK&v=20140806';
-         $.ajax({
-             url: foursquareURL,
-             dataType: "jsonp",
-             jsonp: "callback",
-             success: callback
+                    callback(data); })(marker);
+             }//end of success func
+         })//end of ajax
      })//end of forEach loop
-     })
  }//end of addNewMarkers
 
     self.userInput = ko.observable('');
