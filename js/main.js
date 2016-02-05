@@ -71,6 +71,7 @@ var places = [{
 
 var Place = function(data) {
     this.title = ko.observable(data.title);
+    this.placeId = ko.observable(data.placeId);
     this.position = ko.observable(data.position);
     this.map = ko.observable(data.map);
     this.content = ko.observable(data.content);
@@ -78,32 +79,13 @@ var Place = function(data) {
 };
 
 var ViewModel = function() {
-    addNewMarkers(places, map);
+
     var self = this; //self always maps to ViewModel
 
     self.allPlaces = [];
-    places.forEach(function(placeData) {
-        self.allPlaces.push(new Place(placeData));
-    });
-console.log(self.markerArray);
 
-
-    self.visiblePlaces = ko.observableArray([]);
-
-    places.forEach(function(placeData) { //push allPlaces into visible places
-        self.visiblePlaces.push(placeData);
-    });
-console.log(self.visiblePlaces());
-
-    function addNewMarkers(markers, map) {
-     markers.forEach(function(place) {
-         var foursquareURL = 'https://api.foursquare.com/v2/venues/' + place.placeId + '?client_id=M2QLVQ4S0SIBXW3N0TVJZTBAOHXBIO0YZEOQKBPLUWWL3DMV&client_secret=WVJUWGQ01YKFCJLHEZQLXWOYMYIBUFJVSRXVRBW10EDKPAJK&v=20140806';
-         $.ajax({
-             url: foursquareURL,
-             dataType: "jsonp",
-             jsonp: "callback",
-             success: function(data) {
-                     var name = data.response.venue.name;
+function myCallback(data) {
+    var name = data.response.venue.name;
                      var lat = data.response.venue.location.lat;
                      var lng = data.response.venue.location.lng;
                      var address = data.response.venue.location.formattedAddress[0];
@@ -115,8 +97,7 @@ console.log(self.visiblePlaces());
                          title: name,
                          animation: google.maps.Animation.DROP,
                      });
-                     places.marker = marker;
-
+                     self.allPlaces.marker = marker;
                      var infoWindow = new google.maps.InfoWindow({
                          content: name+ "<br>" + address
                      });
@@ -137,10 +118,30 @@ console.log(self.visiblePlaces());
                                  marker.setAnimation(google.maps.Animation.BOUNCE);
                              }
                          }
-                     })(marker);
-             }//end of success func
-         })//end of ajax
+                 })(marker);
+    alert("help")
+        places.forEach(function(placeData) {
+        self.allPlaces.push(new Place(placeData));
+        });
+        places.forEach(function(placeData) { //push allPlaces into visible places
+        self.visiblePlaces.push(placeData);
+        });
+}
+
+    addNewMarkers(places, map, myCallback);
+    self.visiblePlaces = ko.observableArray([]);
+                     console.log(self.allPlaces);
+
+    function addNewMarkers(markers, map, callback) {
+     markers.forEach(function(place) {
+         var foursquareURL = 'https://api.foursquare.com/v2/venues/' + place.placeId + '?client_id=M2QLVQ4S0SIBXW3N0TVJZTBAOHXBIO0YZEOQKBPLUWWL3DMV&client_secret=WVJUWGQ01YKFCJLHEZQLXWOYMYIBUFJVSRXVRBW10EDKPAJK&v=20140806';
+         $.ajax({
+             url: foursquareURL,
+             dataType: "jsonp",
+             jsonp: "callback",
+             success: callback
      })//end of forEach loop
+     })
  }//end of addNewMarkers
 
     self.userInput = ko.observable('');
