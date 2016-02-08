@@ -1,7 +1,4 @@
 var map;
-var CLIENT_ID = "M2QLVQ4S0SIBXW3N0TVJZTBAOHXBIO0YZEOQKBPLUWWL3DMV";
-var CLIENT_SECRET = "WVJUWGQ01YKFCJLHEZQLXWOYMYIBUFJVSRXVRBW10EDKPAJK";
-
 
 function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
@@ -89,7 +86,7 @@ var ViewModel = function() {
 
     self.visiblePlaces = ko.observableArray([]);
 
-    places.forEach(function(placeData) { //push allPlaces into visible places ko array
+    self.allPlaces.forEach(function(placeData) { //push allPlaces into visible places ko array
         self.visiblePlaces.push(placeData);
         });
 
@@ -102,7 +99,7 @@ var ViewModel = function() {
          var foursquareURL = 'https://api.foursquare.com/v2/venues/' + place.placeId + '?client_id=M2QLVQ4S0SIBXW3N0TVJZTBAOHXBIO0YZEOQKBPLUWWL3DMV&client_secret=WVJUWGQ01YKFCJLHEZQLXWOYMYIBUFJVSRXVRBW10EDKPAJK&v=20140806';
          $.ajax({
              url: foursquareURL,
-             dataType: "jsonp",
+             dataType: "json",
              jsonp: "callback",
              success: function(data) {
                      var name = data.response.venue.name;
@@ -142,7 +139,10 @@ var ViewModel = function() {
                              }
                          }
                  })(marker);
-             }//end of success func
+             },//end of success func
+             error: function(){
+                $('#error').css('visibility', 'visible');
+             }
          })//end of ajax
      })//end of forEach loop
  }//end of addNewMarkers
@@ -167,15 +167,15 @@ var ViewModel = function() {
             place.marker.setVisible(true);
         });
     };
-
-    self.listClick = function() { //links list click to map marker click
+/*links list click to map marker click*/
+    self.listClick = function() {
         google.maps.event.trigger(this.marker, 'click');
     };
 
     //OpenWeatherMap API
     var weatherURL = "http://api.openweathermap.org/data/2.5/weather?id=2152681&appid=51bdd38ab0bc0b12282355d5e5f57c74";
 
-self.weatherMain = ko.observable();
+    self.weatherMain = ko.observable();
     self.weatherDescription = ko.observable();
     self.temp = ko.observable();
     self.iconURL = ko.observable();

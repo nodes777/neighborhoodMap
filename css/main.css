@@ -7,12 +7,28 @@ body {
     width: 100%;
     margin: 0;
 }
-#map {
+.map {
     height: 100%;
 }
-#map-container {
+.map-container {
     height: 800px;
     max-width: 100%;
+}
+.hidey{
+    visibility: hidden;
+
+}
+.hiddenError{
+    bottom: 40%;
+    right: 40%;
+    position: absolute;
+    width: 30%;
+    height: 30%;
+    background-color: black;
+    padding: 2px;
+    z-index: 2;
+    color: white;
+    border-radius: 2px;
 }
 .search-list {
     position: absolute;
