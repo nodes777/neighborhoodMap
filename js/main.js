@@ -133,10 +133,12 @@ var ViewModel = function() {
                          marker.addListener('click', toggleBounce);
 
                          function toggleBounce() {
+
                              if (marker.getAnimation() !== null) {
                                  marker.setAnimation(null);
                              } else {
                                  marker.setAnimation(google.maps.Animation.BOUNCE);
+                                 setTimeout(function(){ marker.setAnimation(null); }, 750);
                              }
                          }
                  })(marker);
