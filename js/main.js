@@ -71,10 +71,10 @@ var places = [{
 
 var Place = function(data) {
     this.title = ko.observable(data.title);
-    this.placeId = ko.observable(data.placeId);
-    this.position = ko.observable(data.position);
-    this.map = ko.observable(data.map);
-    this.content = ko.observable(data.content);
+    this.placeId = data.placeId;
+    this.position = data.position;
+    this.map = data.map;
+    this.content = data.content;
     this.marker = data.marker;
 };
 
@@ -83,23 +83,22 @@ var ViewModel = function() {
     var self = this; //self always maps to ViewModel
 
     self.allPlaces = [];
-
-function myCallback(result) {
-    alert("help")
-        places.forEach(function(placeData) {
+    places.forEach(function(placeData) {
         self.allPlaces.push(new Place(placeData));
         });
-        places.forEach(function(placeData) { //push allPlaces into visible places
-        self.visiblePlaces.push(placeData);
-        });
-}
 
-    addNewMarkers(places, map, myCallback);
     self.visiblePlaces = ko.observableArray([]);
-                     console.log(self.allPlaces);
 
-    function addNewMarkers(markers, map, callback) {
-     markers.forEach(function(place) {
+    places.forEach(function(placeData) { //push allPlaces into visible places
+    self.visiblePlaces.push(placeData);
+    });
+
+
+    addNewMarkers();
+    console.log(self.allPlaces);
+
+    function addNewMarkers() {
+     self.allPlaces.forEach(function(place) {
          var foursquareURL = 'https://api.foursquare.com/v2/venues/' + place.placeId + '?client_id=M2QLVQ4S0SIBXW3N0TVJZTBAOHXBIO0YZEOQKBPLUWWL3DMV&client_secret=WVJUWGQ01YKFCJLHEZQLXWOYMYIBUFJVSRXVRBW10EDKPAJK&v=20140806';
          $.ajax({
              url: foursquareURL,
@@ -118,7 +117,8 @@ function myCallback(result) {
                          title: name,
                          animation: google.maps.Animation.DROP,
                      });
-                     self.allPlaces.marker = marker;
+                     //self.allPlaces.marker = marker;
+                     place.marker = marker;
                      var infoWindow = new google.maps.InfoWindow({
                          content: name+ "<br>" + address
                      });
@@ -139,7 +139,7 @@ function myCallback(result) {
                                  marker.setAnimation(google.maps.Animation.BOUNCE);
                              }
                          }
-                    callback(data); })(marker);
+                 })(marker);
              }//end of success func
          })//end of ajax
      })//end of forEach loop
