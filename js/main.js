@@ -143,8 +143,8 @@ var ViewModel = function() {
              error: function(){
                 $('#error').css('visibility', 'visible');
              }
-         })//end of ajax
-     })//end of forEach loop
+         });//end of ajax
+     });//end of forEach loop
  }//end of addNewMarkers
 
     self.userInput = ko.observable('');
@@ -181,7 +181,6 @@ var ViewModel = function() {
     self.iconURL = ko.observable();
 
     $.getJSON(weatherURL, function(data) {
-        var weatherData = data.weather;
         self.weatherMain(data.weather[0].main);
         var description = data.weather[0].description.charAt(0).toUpperCase() + data.weather[0].description.slice(1); //The JSON doesn't capitalize the first letter of the description, doing it here manually
        self.weatherDescription(description);
