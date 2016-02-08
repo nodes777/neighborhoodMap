@@ -146,7 +146,7 @@ var ViewModel = function() {
  }//end of addNewMarkers
 
     self.userInput = ko.observable('');
-    /* filter markers pn keydown in input area*/
+    /* filter markers on keydown in input area*/
     self.filterMarkers = function() {
         var searchInput = self.userInput().toLowerCase();
         /* remove all visible places*/
